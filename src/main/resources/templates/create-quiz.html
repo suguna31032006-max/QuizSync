@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>QuizSync | Create Quiz</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7ff;
+            color: #172033;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e8ebf3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #4776ff, #704cff);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back {
+            color: #697386;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .container {
+            width: min(1000px, 92%);
+            margin: 35px auto;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .heading p {
+            color: #788195;
+            font-size: 14px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e7eaf2;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(40, 60, 120, 0.05);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #394257;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dfe4ef;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 18px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4776ff;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 105px;
+            resize: vertical;
+            padding: 13px;
+            border: 1px solid #dfe4ef;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        textarea:focus {
+            border-color: #4776ff;
+        }
+
+        .option-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .option input[type="text"] {
+            margin-bottom: 12px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 13px;
+            background: #eef2ff;
+            color: #4776ff;
+            border: 1px dashed #9fb3ff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .add-btn:hover {
+            background: #e5eaff;
+        }
+
+        .create-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4776ff, #704cff);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .create-btn:hover {
+            opacity: 0.93;
+        }
+
+        .question-count {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 12px 14px;
+            background: #f7f8fc;
+            border-radius: 10px;
+        }
+
+        .question-count span {
+            font-size: 13px;
+            color: #697386;
+        }
+
+        .question-count strong {
+            color: #4776ff;
+            font-size: 18px;
+        }
+
+        .question-list {
+            margin-top: 20px;
+        }
+
+        .question-item {
+            background: #f7f8fc;
+            border: 1px solid #e5e8f0;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question-item strong {
+            color: #4776ff;
+            font-size: 13px;
+        }
+
+        .question-item p {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #394257;
+            line-height: 1.5;
+        }
+
+        .empty-message {
+            color: #8a93a6;
+            font-size: 13px;
+            text-align: center;
+            padding: 12px;
+        }
+
+        /* RIGHT SIDE */
+
+        .info-box {
+            background: linear-gradient(135deg, #4776ff, #704cff);
+            color: white;
+            border: none;
+        }
+
+        .info-box h2 {
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #dce4ff;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .step-number {
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-text h4 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .step-text p {
+            font-size: 11px;
+        }
+
+        @media (max-width: 800px) {
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .option-row {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <div class="logo">
+
+        <div class="logo-box">
+            Q
+        </div>
+
+        QuizSync
+
+    </div>
+
+
+    <a href="/dashboard" class="back">
+        ← Back to Dashboard
+    </a>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <div class="heading">
+
+        <h1>
+            Create a New Quiz
+        </h1>
+
+        <p>
+            Create questions and challenge players in real time.
+        </p>
+
+    </div>
+
+
+
+    <div class="layout">
+
+
+        <!-- MAIN FORM -->
+
+        <div class="card">
+
+
+            <h2>
+                Quiz Details
+            </h2>
+
+
+            <form id="quizForm">
+
+
+                <label>
+                    Quiz Title
+                </label>
+
+                <input
+                        type="text"
+                        id="quizTitle"
+                        placeholder="Example: Java Programming Basics"
+                        required
+                >
+
+
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                        id="description"
+                        placeholder="Write a short description about your quiz..."
+                ></textarea>
+
+
+
+                <label>
+                    Category
+                </label>
+
+                <select id="category">
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option value="Java">
+                        Java
+                    </option>
+
+                    <option value="SQL">
+                        SQL
+                    </option>
+
+                    <option value="Web Development">
+                        Web Development
+                    </option>
+
+                    <option value="Programming">
+                        Programming
+                    </option>
+
+                    <option value="General Knowledge">
+                        General Knowledge
+                    </option>
+
+                </select>
+
+
+
+                <div class="question-count">
+
+                    <span>
+                        Questions added
+                    </span>
+
+                    <strong id="questionCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+
+                <h2>
+                    Add Question
+                </h2>
+
+
+
+                <label>
+                    Question
+                </label>
+
+                <textarea
+                        id="question"
+                        placeholder="Type your question here..."
+                ></textarea>
+
+
+
+                <label>
+                    Answer Options
+                </label>
+
+
+
+                <div class="option-row">
+
+
+                    <div class="option">
+
+                        <input
+                                type="radio"
+                                name="correct"
+                                value="A"
+                                checked
+                        >
+
+                        <input
+                                type="text"
+                                id="optionA"
+                                placeholder="Option A"
+                        >
+
+                    </div>
+
+
+
+                    <div class="option">
+
+                        <input
+                                type="radio"
+                                name="correct"
+                                value="B"
+                        >
+
+                        <input
+                                type="text"
+                                id="optionB"
+                                placeholder="Option B"
+                        >
+
+                    </div>
+
+
+
+                    <div class="option">
+
+                        <input
+                                type="radio"
+                                name="correct"
+                                value="C"
+                        >
+
+                        <input
+                                type="text"
+                                id="optionC"
+                                placeholder="Option C"
+                        >
+
+                    </div>
+
+
+
+                    <div class="option">
+
+                        <input
+                                type="radio"
+                                name="correct"
+                                value="D"
+                        >
+
+                        <input
+                                type="text"
+                                id="optionD"
+                                placeholder="Option D"
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <button
+                        type="button"
+                        class="add-btn"
+                        onclick="addQuestion()"
+                >
+                    + Add Question
+                </button>
+
+
+
+                <!-- ADDED QUESTIONS -->
+
+                <div class="question-list">
+
+                    <div
+                            id="questionList"
+                            class="empty-message"
+                    >
+                        No questions added yet.
+                    </div>
+
+                </div>
+
+
+
+                <button
+                        type="submit"
+                        class="create-btn"
+                >
+                    Create Quiz →
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+
+        <!-- INFORMATION -->
+
+        <div>
+
+
+            <div class="card info-box">
+
+
+                <h2>
+                    How it works 🚀
+                </h2>
+
+
+                <p>
+                    Create your quiz, share the generated code,
+                    and let players join your live session.
+                </p>
+
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div class="step-text">
+
+                        <h4>
+                            Create Questions
+                        </h4>
+
+                        <p>
+                            Add questions with four answer options.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-text">
+
+                        <h4>
+                            Generate Quiz Code
+                        </h4>
+
+                        <p>
+                            A unique code will identify your quiz.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-text">
+
+                        <h4>
+                            Invite Players
+                        </h4>
+
+                        <p>
+                            Share the code with your participants.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-text">
+
+                        <h4>
+                            Start Live Quiz
+                        </h4>
+
+                        <p>
+                            Players answer together in real time.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+    // ==========================================
+    // STORE ALL QUESTIONS
+    // ==========================================
+
+    let questions = [];
+
+
+
+    // ==========================================
+    // ADD QUESTION
+    // ==========================================
+
+    function addQuestion() {
+
+
+        const questionText =
+            document.getElementById("question")
+                .value
+                .trim();
+
+
+        const optionA =
+            document.getElementById("optionA")
+                .value
+                .trim();
+
+
+        const optionB =
+            document.getElementById("optionB")
+                .value
+                .trim();
+
+
+        const optionC =
+            document.getElementById("optionC")
+                .value
+                .trim();
+
+
+        const optionD =
+            document.getElementById("optionD")
+                .value
+                .trim();
+
+
+
+        const selectedCorrect =
+            document.querySelector(
+                'input[name="correct"]:checked'
+            );
+
+
+
+        if (!selectedCorrect) {
+
+            alert("Please select the correct answer.");
+
+            return;
+
+        }
+
+
+
+        const correctAnswer =
+            selectedCorrect.value;
+
+
+
+        // CHECK EMPTY FIELDS
+
+        if (
+            questionText === "" ||
+            optionA === "" ||
+            optionB === "" ||
+            optionC === "" ||
+            optionD === ""
+        ) {
+
+            alert(
+                "Please fill the question and all four options."
+            );
+
+            return;
+
+        }
+
+
+
+        // CREATE QUESTION OBJECT
+
+        const question = {
+
+            questionText: questionText,
+
+            optionA: optionA,
+
+            optionB: optionB,
+
+            optionC: optionC,
+
+            optionD: optionD,
+
+            correctAnswer: correctAnswer
+
+        };
+
+
+
+        // ADD TO ARRAY
+
+        questions.push(question);
+
+
+
+        // UPDATE COUNT
+
+        document.getElementById(
+            "questionCount"
+        ).innerText = questions.length;
+
+
+
+        // DISPLAY QUESTIONS
+
+        displayQuestions();
+
+
+
+        // CLEAR INPUTS
+
+        document.getElementById(
+            "question"
+        ).value = "";
+
+
+        document.getElementById(
+            "optionA"
+        ).value = "";
+
+
+        document.getElementById(
+            "optionB"
+        ).value = "";
+
+
+        document.getElementById(
+            "optionC"
+        ).value = "";
+
+
+        document.getElementById(
+            "optionD"
+        ).value = "";
+
+
+
+        // RESET CORRECT ANSWER TO A
+
+        document.querySelector(
+            'input[name="correct"][value="A"]'
+        ).checked = true;
+
+
+
+        alert(
+            "Question " +
+            questions.length +
+            " added successfully!"
+        );
+
+    }
+
+
+
+    // ==========================================
+    // DISPLAY ALL ADDED QUESTIONS
+    // ==========================================
+
+    function displayQuestions() {
+
+
+        const list =
+            document.getElementById(
+                "questionList"
+            );
+
+
+
+        list.innerHTML = "";
+
+
+
+        questions.forEach(
+            function(question, index) {
+
+
+                const item =
+                    document.createElement("div");
+
+
+
+                item.className =
+                    "question-item";
+
+
+
+                item.innerHTML =
+
+                    "<strong>Question " +
+                    (index + 1) +
+                    "</strong>" +
+
+                    "<p>" +
+                    question.questionText +
+                    "</p>";
+
+
+
+                list.appendChild(item);
+
+            }
+        );
+
+    }
+
+
+
+    // ==========================================
+    // CREATE QUIZ
+    // ==========================================
+
+    document.getElementById(
+        "quizForm"
+    ).addEventListener(
+        "submit",
+        async function(event) {
+
+
+            event.preventDefault();
+
+
+
+            // CHECK QUESTIONS
+
+            if (questions.length === 0) {
+
+                alert(
+                    "Please add at least one question."
+                );
+
+                return;
+
+            }
+
+
+
+            // GET QUIZ DETAILS
+
+            const title =
+                document.getElementById(
+                    "quizTitle"
+                ).value.trim();
+
+
+
+            const description =
+                document.getElementById(
+                    "description"
+                ).value.trim();
+
+
+
+            const category =
+                document.getElementById(
+                    "category"
+                ).value;
+
+
+
+            // CHECK TITLE
+
+            if (title === "") {
+
+                alert(
+                    "Please enter quiz title."
+                );
+
+                return;
+
+            }
+
+
+
+            // CREATE FINAL DATA
+
+            const quizData = {
+
+                title: title,
+
+                description: description,
+
+                category: category,
+
+                questions: questions
+
+            };
+
+
+
+            // DEBUG
+
+            console.log(
+                "Questions being sent:",
+                questions
+            );
+
+
+            console.log(
+                "Total questions:",
+                questions.length
+            );
+
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/quizzes",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    quizData
+                                )
+
+                        }
+                    );
+
+
+
+                const result =
+                    await response.json();
+
+
+
+                console.log(
+                    "Server response:",
+                    result
+                );
+
+
+
+                if (response.ok) {
+
+
+                    alert(
+                        "Quiz created successfully! 🎉\n\n" +
+                        "Questions saved: " +
+                        questions.length +
+                        "\n\n" +
+                        "Quiz Code: " +
+                        result.quizCode
+                    );
+
+
+
+                    // GO TO DASHBOARD
+
+                    window.location.href =
+                        "/dashboard";
+
+
+                } else {
+
+
+                    alert(
+                        "Unable to create quiz.\n\n" +
+                        "Server returned an error."
+                    );
+
+
+                }
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to connect to the server."
+                );
+
+
+            }
+
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QuizSync | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef3ff, #f8f9ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            width: 420px;
+            background: white;
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 20px 60px rgba(40, 60, 120, 0.12);
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .logo-box {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4776ff, #6c4cff);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #172033;
+        }
+
+        h1 {
+            text-align: center;
+            color: #172033;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7b8495;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #30394d;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dfe4ef;
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #4776ff;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            font-size: 13px;
+        }
+
+        .remember {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            color: #697386;
+        }
+
+        .remember input {
+            width: auto;
+            margin: 0;
+        }
+
+        .forgot {
+            color: #4776ff;
+            text-decoration: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #4776ff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3866e8;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            color: #697386;
+            font-size: 14px;
+        }
+
+        .register a {
+            color: #4776ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back a {
+            color: #697386;
+            text-decoration: none;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        <div class="logo-box">Q</div>
+        <span>QuizSync</span>
+    </div>
+
+    <h1>Welcome Back!</h1>
+
+    <p class="subtitle">
+        Log in to continue your quiz journey.
+    </p>
+
+        <form id="loginForm">
+
+            <label>Username</label>
+            <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter your username"
+                    required
+            >
+
+            <label>Password</label>
+            <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+            >
+
+            <div class="options">
+
+                <label class="remember">
+                    <input type="checkbox">
+                    Remember me
+                </label>
+
+                <a href="#" class="forgot">
+                    Forgot password?
+                </a>
+
+            </div>
+
+            <button type="submit">
+                Log In
+            </button>
+
+        </form>
+
+
+    <div class="register">
+        Don't have an account?
+        <a href="#">Sign Up</a>
+    </div>
+
+    <div class="back">
+        <a href="/">← Back to Home</a>
+    </div>
+
+</div>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const user = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value
+        };
+
+        try {
+
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            });
+
+            if (response.ok) {
+
+                alert("Login successful!");
+
+                window.location.href = "/dashboard";
+
+            } else {
+
+                const message = await response.text();
+
+                alert(message);
+            }
+
+        } catch (error) {
+
+            alert("Unable to connect to server.");
+
+            console.error(error);
+        }
+    });
+</script>
+
+</body>
+</html>

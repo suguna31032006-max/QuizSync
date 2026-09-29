@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QuizSync | Join Quiz</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7ff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e8ebf3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #172033;
+        }
+
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #4776ff, #704cff);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #697386;
+            font-size: 14px;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .join-card {
+            width: min(470px, 100%);
+            background: white;
+            border: 1px solid #e7eaf2;
+            border-radius: 22px;
+            padding: 38px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(40, 60, 120, 0.08);
+        }
+
+        .icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 22px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #edf2ff, #f2edff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        h1 {
+            font-size: 27px;
+            color: #172033;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #788195;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-size: 13px;
+            font-weight: bold;
+            color: #394257;
+            margin-bottom: 8px;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #dfe4ef;
+            border-radius: 11px;
+            outline: none;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .code-input:focus {
+            border-color: #4776ff;
+            box-shadow: 0 0 0 3px rgba(71, 118, 255, 0.08);
+        }
+
+        .join-btn,
+        .start-btn {
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #4776ff, #704cff);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .join-btn:hover,
+        .start-btn:hover {
+            opacity: 0.93;
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 25px;
+            padding: 22px;
+            background: #f8faff;
+            border: 1px solid #dfe7ff;
+            border-radius: 16px;
+            text-align: left;
+        }
+
+        .success {
+            color: #16834b;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quiz-title {
+            color: #172033;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .quiz-category {
+            color: #788195;
+            font-size: 13px;
+        }
+
+        .start-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 20px;
+            padding: 13px;
+            background: #fff3f3;
+            border: 1px solid #ffd6d6;
+            border-radius: 10px;
+            color: #d33b3b;
+            font-size: 13px;
+        }
+
+        .hint {
+            margin-top: 22px;
+            padding: 13px;
+            background: #f7f8fc;
+            border-radius: 10px;
+            color: #788195;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .hint strong {
+            color: #4776ff;
+        }
+
+        @media (max-width: 500px) {
+
+            .join-card {
+                padding: 28px 20px;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">
+
+        <div class="logo-box">
+            Q
+        </div>
+
+        QuizSync
+
+    </div>
+
+    <a href="/dashboard" class="back">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="container">
+
+    <div class="join-card">
+
+        <div class="icon">
+            🚀
+        </div>
+
+        <h1>
+            Join a Live Quiz
+        </h1>
+
+        <p class="subtitle">
+            Enter the quiz code shared by your host
+            to join the live quiz session.
+        </p>
+
+
+        <label for="quizCode">
+            Quiz Code
+        </label>
+
+
+        <input
+                type="text"
+                id="quizCode"
+                class="code-input"
+                placeholder="ABC123"
+                maxlength="6"
+                autocomplete="off"
+        >
+
+
+        <button
+                class="join-btn"
+                onclick="joinQuiz()"
+        >
+            Join Quiz →
+        </button>
+
+
+        <div
+                id="quizResult"
+                class="quiz-result"
+        >
+
+            <div class="success">
+                ✓ Quiz Found
+            </div>
+
+            <div
+                    id="quizTitle"
+                    class="quiz-title">
+            </div>
+
+            <div
+                    id="quizCategory"
+                    class="quiz-category">
+            </div>
+
+
+            <a
+                    href="#"
+                    id="startQuizBtn"
+                    class="start-btn">
+                Start Quiz →
+            </a>
+
+        </div>
+
+
+        <div
+                id="errorMessage"
+                class="error-message">
+        </div>
+
+
+        <div class="hint">
+
+            💡 Ask your host for the
+            <strong>6-character quiz code</strong>
+            to join the session.
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    let currentQuizCode = "";
+
+
+    async function joinQuiz() {
+
+        const code =
+            document.getElementById("quizCode").value
+                .trim()
+                .toUpperCase();
+
+
+        const resultBox =
+            document.getElementById("quizResult");
+
+
+        const errorBox =
+            document.getElementById("errorMessage");
+
+
+        resultBox.style.display = "none";
+
+        errorBox.style.display = "none";
+
+
+        if (code === "") {
+
+            errorBox.innerText =
+                "Please enter a quiz code.";
+
+            errorBox.style.display = "block";
+
+            return;
+        }
+
+
+        if (code.length !== 6) {
+
+            errorBox.innerText =
+                "Quiz code must contain 6 characters.";
+
+            errorBox.style.display = "block";
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                "/api/quizzes/code/" + code
+            );
+
+
+            if (response.ok) {
+
+                const quiz =
+                    await response.json();
+
+
+                currentQuizCode = code;
+
+
+                document.getElementById("quizTitle")
+                    .innerText =
+                    quiz.title;
+
+
+                document.getElementById("quizCategory")
+                    .innerText =
+                    "Category: " +
+                    (quiz.category || "General");
+
+
+                resultBox.style.display =
+                    "block";
+
+
+                document.getElementById("startQuizBtn")
+                    .href =
+                    "/quiz?code=" +
+                    encodeURIComponent(code);
+
+            }
+
+            else {
+
+                errorBox.innerText =
+                    "Quiz not found. Please check the quiz code.";
+
+                errorBox.style.display =
+                    "block";
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            errorBox.innerText =
+                "Unable to connect to the server.";
+
+            errorBox.style.display =
+                "block";
+
+        }
+
+    }
+
+
+    document.getElementById("quizCode")
+        .addEventListener("input", function () {
+
+            this.value = this.value
+                .replace(/[^a-zA-Z0-9]/g, "")
+                .toUpperCase();
+
+        });
+
+</script>
+
+</body>
+</html>
